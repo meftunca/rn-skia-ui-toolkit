@@ -1,0 +1,1 @@
+// if @expo/vector-icons is installed, you can use it like this:
