@@ -1,24 +1,26 @@
 import { makeCanvasText } from '@//Drawing/CanvasItems/Text';
 import { getElevation } from '@//Drawing/utils';
 import { useCanvasCtx } from '@//Provider';
-import useDrawingStore from '@/store';
-import { AnimatePresence,MotiView } from 'moti';
 import React,{ useCallback,useMemo } from 'react';
-import { KeyboardAvoidingView,TextInput,useWindowDimensions } from 'react-native';
+import { KeyboardAvoidingView,TextInput,View,useWindowDimensions } from 'react-native';
 
 import IconButton from '@/Components/IconButton';
 
 const TextSelectionListener = () => {
   const layout = useWindowDimensions();
-  const {selectedList, completedPaths, replaceCompletedPath} =
-    useDrawingStore();
+  const {selectedList, paths, replacePath} =
+    useCanvasCtx(f=>({
+      selectedList: f.selectedList,
+      paths: f.paths,
+      replacePath: f.replacePath,
+    }));
 
   const selectedText = useMemo(
     () =>
-      completedPaths.find(
+      paths.value.find(
         a => a.type === 'text' && selectedList.includes(a.id),
       ),
-    [completedPaths, selectedList],
+    [paths, selectedList],
   );
   const [font, dimensions] = useCanvasCtx(f => [
     f.font['rubik']['bold'],
@@ -31,7 +33,7 @@ const TextSelectionListener = () => {
       const newText = makeCanvasText(content, font, layout.width - 32);
       newText.id = selectedText.id;
       dimensions[newText.id] = newText.dimension;
-      replaceCompletedPath(selectedText.id, newText);
+      replacePath(selectedText.id, newText);
     },
     [selectedList, selectedText],
   );
@@ -39,10 +41,7 @@ const TextSelectionListener = () => {
   // hide from top-down
   if (!!selectedText) {
     return (
-        <MotiView
-          from={{bottom: -layout.height / 4}}
-          animate={{bottom: 0}}
-          transition={{type: 'timing', duration: 200}}
+        <View
           style={{
             position: 'absolute',
             bottom: 0,
@@ -53,7 +52,6 @@ const TextSelectionListener = () => {
             backgroundColor: '#010101',
           }}>
           {
-            <AnimatePresence>
               <KeyboardAvoidingView style={{flexDirection: 'row', flex: 1, padding: 16}} >
                 <TextInput
                   multiline
@@ -74,9 +72,8 @@ const TextSelectionListener = () => {
                 />
                 <IconButton icon="send" color="white" />
               </KeyboardAvoidingView>
-            </AnimatePresence>
           }
-        </MotiView>
+        </View>
     );
   }
   return null;

@@ -65,15 +65,15 @@ interface DrawingStore {
   /**
    * Array of completed paths for redrawing
    */
-  completedPaths: CurrentPath[];
+  paths: CurrentPath[];
   /**
    * A function to update completed paths
    */
-  setCompletedPaths: (completedPaths: CurrentPath[]) => void;
+  setPaths: (paths: CurrentPath[]) => void;
   /**
    * A function to replace the  path with id
    */
-  replaceCompletedPath: (id: string, path: CurrentPath) => void;
+  replacePath: (id: string, path: CurrentPath) => void;
   /**
    * Current stroke
    */
@@ -108,7 +108,7 @@ const useDrawingStore = create<DrawingStore>((set, get) => {
   return {
     mode: 'select',
     setMode: (mode: 'draw' | 'erase' | 'select' | 'text') => set({mode}),
-    completedPaths: [],
+    paths: [],
     selectedList: [],
     assignSelectedList: (ids: string[]) => {
       // set({selectedList: [...ids]});
@@ -128,26 +128,26 @@ const useDrawingStore = create<DrawingStore>((set, get) => {
       });
     },
 
-    setCompletedPaths: completedPaths => {
+    setPaths: paths => {
       'worklet';
-      set(f => ({...f, completedPaths: [...completedPaths]}));
+      set(f => ({...f, paths: [...paths]}));
     },
-    replaceCompletedPath: (id: string, path: CurrentPath) => {
+    replacePath: (id: string, path: CurrentPath) => {
       'worklet';
       set(f => {
-        const newCompletedPaths = [...f.completedPaths];
+        const newCompletedPaths = [...f.paths];
         const index = newCompletedPaths.findIndex(item => item.id === id);
         if (index !== -1) {
           newCompletedPaths[index] = path;
         }
-        return {...f, completedPaths: newCompletedPaths};
+        return {...f, paths: newCompletedPaths};
       });
     },
     deleteCompletedPath: (id: string) => {
       'worklet';
       set(f => ({
         ...f,
-        completedPaths: f.completedPaths.filter(p => p.id !== id),
+        paths: f.paths.filter(p => p.id !== id),
       }));
     },
     strokeWidth: 2,
@@ -175,12 +175,12 @@ const useDrawingStore = create<DrawingStore>((set, get) => {
     },
     modifyById: (id, callback) => {
       set(f => {
-        const index = f.completedPaths.findIndex(item => item.id === id);
+        const index = f.paths.findIndex(item => item.id === id);
         if (index !== -1) {
-          const newPath = callback(f.completedPaths[index]);
-          const newCompletedPaths = [...f.completedPaths];
+          const newPath = callback(f.paths[index]);
+          const newCompletedPaths = [...f.paths];
           newCompletedPaths[index] = newPath;
-          return {...f, completedPaths: newCompletedPaths};
+          return {...f, paths: newCompletedPaths};
         }
         return f;
       });

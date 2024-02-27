@@ -1,13 +1,11 @@
-import { FlashList } from '@shopify/flash-list';
 import {rect, Matrix4, } from '@shopify/react-native-skia';
-import { useCanvasCtx } from "@//Provider";
-import useDrawingStore,{ CurrentPath } from '@/store';
+import { useCanvasCtx,CurrentPath } from "@//Provider";
 import React,{ useMemo } from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
   useWindowDimensions,
-  View,Image
+  View,Image,FlatList
 } from 'react-native';
 import {List,ListItem } from '@/Components/List';
 import IconButton from "@/Components/IconButton"
@@ -76,11 +74,14 @@ const RenderStickersItem = ({
 const Stickers = () => {
   const [visible, setVisible] = React.useState<null | boolean>(null);
   const window = useWindowDimensions();
-  const {completedPaths, setCompletedPaths} = useDrawingStore();
-  const ctx = useCanvasCtx(f => f);
+  const [paths, addPath] = useCanvasCtx(f=>[
+    f.paths,
+    f.addPath,
+  ]);
   const selectedList = useMemo(() => {
-    return ctx.paths?.value?.filter(path => path.type === 'sticker')||[];
-  }, [ctx.paths?.value]);
+    // return ctx.paths?.value?.filter(path => path.type === 'sticker')||[];
+    return paths.filter(path => path.type === 'sticker');
+  }, [paths]);
   const sourcesList = useMemo(() => {
     const list: (Icons[] | string)[] = [];
     (iconList as Groups[]).forEach((group: Groups) => {
@@ -110,13 +111,8 @@ const Stickers = () => {
           onModalHide={() => setVisible(null)}
           containerStyle={styles.modal}
           title="Stickers">
-          <FlashList
+          <FlatList
             data={sourcesList}
-            estimatedItemSize={25}
-            getItemType={item => {
-              // To achieve better performance, specify the type based on the item
-              return typeof item === 'string' ? 'sectionHeader' : 'row';
-            }}
             renderItem={({item, index}) => (
               <RenderStickersItem
                 group={item}
@@ -129,7 +125,9 @@ const Stickers = () => {
                   // };
                   // ctx.paths.value[path.id] = path;
                   // ctx.changeDimensions(path.id, path.dimensions);
-                  setCompletedPaths([...completedPaths, path]);
+                  // setPaths([...paths, path]);
+                  addPath(path);
+                  // paths.value = [...paths.value, path];
 
                 }}
               />

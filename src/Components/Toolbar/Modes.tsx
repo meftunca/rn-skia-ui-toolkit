@@ -1,19 +1,18 @@
-import {FlashList} from '@shopify/flash-list';
-import constants from '@//Drawing/constants';
-import useDrawingStore from '@/store';
-import React from 'react';
-import IconButton from '@/Components/IconButton';
-import { View } from 'react-native';
+import constants from "@//Drawing/constants";
+import React from "react";
+import IconButton from "@/Components/IconButton";
+import { View, FlatList } from "react-native";
+import { useCanvasCtx } from "@/Provider";
 
 // import Snackbar from 'react-native-snackbar';
 const RenderStoreItem = ({
   mode,
   onClose,
 }: {
-  mode: 'draw' | 'erase' | 'select' | 'text';
+  mode: "draw" | "erase" | "select" | "text";
   onClose: () => void;
 }) => {
-  const [currentMode, setMode] = useDrawingStore(state => [
+  const [currentMode, setMode] = useCanvasCtx((state) => [
     state.mode,
     state.setMode,
   ]);
@@ -21,7 +20,7 @@ const RenderStoreItem = ({
   return (
     <IconButton
       icon={mode}
-      color={currentMode === mode ? '#2C8D03' : '#ffffff'}
+      color={currentMode === mode ? "#2C8D03" : "#ffffff"}
       onPress={() => {
         setMode(mode);
         onClose();
@@ -36,20 +35,22 @@ const RenderStoreItem = ({
   );
 };
 
-const ModeList = ({onClose}: {onClose: () => void}) => {
+const ModeList = ({ onClose }: { onClose: () => void }) => {
   return (
     <View
       style={{
         borderRadius: 12,
         elevation: 2,
-      }}>
-      <FlashList
-        data={constants.modes}
-        estimatedItemSize={12}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        renderItem={({item}) => <RenderStoreItem mode={item} key={item} onClose={() => onClose()} />}
-      />
+        flexDirection: "row",
+        justifyContent: "center",
+        flex:1,
+        width: "100%",
+      }}
+    >
+      <RenderStoreItem mode="draw" onClose={() => onClose()} />
+      <RenderStoreItem mode="erase" onClose={() => onClose()} />
+      <RenderStoreItem mode="select" onClose={() => onClose()} />
+      <RenderStoreItem mode="text" onClose={() => onClose()} />
     </View>
   );
 };

@@ -1,11 +1,10 @@
 import {useFloating} from '@floating-ui/react-native';
-import {FlashList} from '@shopify/flash-list';
 import Color from 'color';
-import constants from '@//Drawing/constants';
-import utils from '@//Drawing/utils';
-import useDrawingStore from '@/store';
+import constants from '@/Drawing/constants';
+import utils from '@/Drawing/utils';
 import React, {useState} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View,FlatList} from 'react-native';
+import { useCanvasCtx } from '@/Provider';
 const RenderStoreItem = ({
   strokeWidth,
   onClose,
@@ -13,7 +12,7 @@ const RenderStoreItem = ({
   strokeWidth: number;
   onClose: () => void;
 }) => {
-  const [currentStrokeWidth, color, setStrokeWidth] = useDrawingStore(state => [
+  const [currentStrokeWidth, color, setStrokeWidth] = useCanvasCtx(state => [
     state.strokeWidth,
     state.color,
     state.setStrokeWidth,
@@ -39,7 +38,7 @@ const RenderStoreItem = ({
       ]}>
       <View
         style={{
-          width: 25,
+          width: 16,
           backgroundColor:
             strokeWidth !== currentStrokeWidth
               ? Color(color).alpha(0.2).hex()
@@ -64,13 +63,12 @@ const StrokeList = ({onClose}: {onClose: () => void}) => {
         borderRadius: 12,
         elevation: 2,
       }}>
-      <FlashList
+      <FlatList
         data={constants.strokes}
         horizontal
-        estimatedItemSize={12}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
-          padding: 12,
+          padding: 4,
         }}
         renderItem={({item}) => <RenderStoreItem strokeWidth={item} key={item} onClose={() => onClose()} />}
       />

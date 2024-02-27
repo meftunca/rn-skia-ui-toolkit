@@ -5,6 +5,7 @@ import { StyleSheet, Text, View } from "react-native";
 import DrawingBoard from "./src";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import * as React from "react";
 
 export default function App() {
   return (

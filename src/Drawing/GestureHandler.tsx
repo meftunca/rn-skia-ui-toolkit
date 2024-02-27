@@ -14,7 +14,6 @@ import React, {useEffect, useMemo} from 'react';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import Animated, {runOnJS, SharedValue, useAnimatedStyle, useSharedValue} from 'react-native-reanimated';
 import {useCanvasCtx} from '../Provider';
-import useDrawingStore from '../store';
 import {Pressable} from 'react-native';
 
 interface GestureHandlerProps {
@@ -32,12 +31,13 @@ const AnimatedTouchable = Animated.createAnimatedComponent(Pressable);
   const origin = useSharedValue({x: 0, y: 0});
   const offset = useSharedValue(Matrix4());
   const isSelected = selectedList.includes(id);
-  const modifyById = useDrawingStore(f => f.modifyById);
+  const modifyById = useCanvasCtx(f => f.modifyById);
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     // skMatrix.value = Skia.Matrix(toMatrix3(matrix.value) as any);
     // modifyById(id, f => ({...f, matrix: Skia.Matrix(matrix.value)}));
   }, [matrix]);
+  console.log('matrix', matrix);
 
   const pan = Gesture.Pan()
     .runOnJS(true)

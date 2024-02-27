@@ -1,11 +1,10 @@
-import {FlashList} from '@shopify/flash-list';
 import constants from '@//Drawing/constants';
 import utils from '@//Drawing/utils';
-import useDrawingStore from '@/store';
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View,FlatList} from 'react-native';
+import { useCanvasCtx } from '@/Provider';
 const RenderColorItem = ({color}: {color: string}) => {
-  const [currentColor, setColor] = useDrawingStore(state => [
+  const [currentColor, setColor] = useCanvasCtx(state => [
     state.color,
     state.setColor,
   ]);
@@ -36,10 +35,9 @@ const RenderColorItem = ({color}: {color: string}) => {
 
 const Color = () => {
   return (
-    <FlashList
+    <FlatList
       data={constants.colors}
       horizontal
-      estimatedItemSize={12}
       renderItem={({item}) => <RenderColorItem color={item} key={item} />}
     />
   );

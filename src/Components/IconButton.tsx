@@ -17,9 +17,9 @@ import TriangleIcon from "@/Assets/icons/Triangle";
 import DrawPenIcon from "@/Assets/icons/DrawPen";
 import ShapePlusIcon from "@/Assets/icons/ShapePlus";
 
-import { TouchableOpacity, View, ViewProps, StyleSheet } from "react-native";
+import { TouchableOpacity, View, ViewProps, StyleSheet, TouchableOpacityProps } from "react-native";
 
-type IconButtonProps = TouchableOpacity & {
+type IconButtonProps = TouchableOpacityProps & {
   color?: string;
   icon:
     | "select"
@@ -36,6 +36,7 @@ type IconButtonProps = TouchableOpacity & {
     | "send"
     | "triangle"
     | "line"
+    | "draw-pen"
     |"sticker-emoji"
     | "format-text-bold";
   size?: number;
@@ -50,6 +51,7 @@ const iconsPath = {
   erase:EraseIcon,
   undo:UndoIcon,
   redo:RedoIcon,
+  reload:RedoIcon,
   "format-text-bold":TextIcon,
   send:SendIcon,
   "sticker-emoji":StickerEmojiIcon,
@@ -83,10 +85,8 @@ const IconButton: React.FC<IconButtonProps> = ({
       padding:8,
       borderRadius:16
     }} {...props}>
-      <View style={[Style.icon, style,{
-         tintColor: color,
-      }]}>
-        <RenderedIcon width={size} height={size} />
+      <View style={[Style.icon, style]}>
+        <RenderedIcon color={color} width={size} height={size} />
       </View>
     </TouchableOpacity>
   );

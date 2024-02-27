@@ -1,8 +1,6 @@
-import {FlashList} from '@shopify/flash-list';
 import {SkPath,rect, Skia, Matrix4,} from '@shopify/react-native-skia';
-import { useCanvasCtx } from '@//Provider';
-import useDrawingStore, {CurrentPath} from '@/store';
-import Modal from '@/Components/Modal';
+import { useCanvasCtx,CurrentPath } from '@//Provider';
+ import Modal from '@/Components/Modal';
 import React, {useMemo} from 'react';
 import {
   StyleSheet,
@@ -10,6 +8,8 @@ import {
   useWindowDimensions,
   View,
   Text,
+  FlatList,
+  SectionList,
 } from 'react-native';
 import IconButton from '@/Components/IconButton';
 
@@ -90,10 +90,13 @@ const shapeList: ShapeItemList[] = [
 const ShapeList = () => {
   const [visible, setVisible] = React.useState<null | boolean>(null);
   const window = useWindowDimensions();
-  const {completedPaths, setCompletedPaths,selectedList, color, stroke} = useDrawingStore();
+  const [addPath,color, stroke] = useCanvasCtx(f=>[f.addPath
+    ,f.currentColor,
+     f.stroke,]);
   const ctx = useCanvasCtx(f => f);
   const centerY = window.height / 2;
   const centerX = window.width / 2;
+
   return (
     <>
       <IconButton
@@ -110,13 +113,9 @@ const ShapeList = () => {
           onModalHide={() => setVisible(null)}
           containerStyle={styles.modal}
           title="ShapeList">
-          <FlashList
+          <FlatList
             data={shapeList}
-            estimatedItemSize={25}
-            getItemType={item => {
-              // To achieve better performance, specify the type based on the item
-              return typeof item === 'string' ? 'sectionHeader' : 'row';
-            }}
+      
             renderItem={({item, index}) => (
               <RenderShapeListItem
                 group={item}
@@ -127,16 +126,15 @@ const ShapeList = () => {
                   let newShape: CurrentPath = {
                     id: Math.random().toString(),
                     type: 'draw',
-                    color,
+                    color:color.value,
                     // @ts-ignore
                     path: item.value?.copy(),
-                    paint: stroke.copy(),
+                    paint: stroke.value.copy(),
                     matrix: Matrix4(),
                     options: item.options,
                     dimension: rect(bounds.x , bounds.y , bounds.width, bounds.height),
                   };
-                  // console.log('newShape', newShape)
-                  setCompletedPaths([...completedPaths, newShape]); 
+                  addPath(newShape);
                 }}
               />
             )}

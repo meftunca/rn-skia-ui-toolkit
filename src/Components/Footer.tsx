@@ -4,15 +4,22 @@ import IconButton from '@/Components/IconButton';
 // import Snackbar from 'react-native-snackbar';
 import history from '../Drawing/history';
 import utils from '../Drawing/utils';
-import useDrawingStore from '../store';
+import { useCanvasCtx } from '@/Provider';
 
 const Footer = () => {
-  const {setCompletedPaths, setStroke, setColor, setStrokeWidth, canvasInfo, completedPaths} = useDrawingStore();
+  const {setPaths, setStroke, setColor, setStrokeWidth, canvasInfo, paths} = useCanvasCtx(f=>({
+    setPaths: f.setPaths,
+    setStroke: f.setStroke,
+    setColor: f.setColor,
+    setStrokeWidth: f.setStrokeWidth,
+    canvasInfo: f.canvasInfo,
+    paths: f.paths,
+  }));
   /**
    * Reset the canvas & draw state
    */
   const reset = () => {
-    setCompletedPaths([]);
+    setPaths([]);
     setStroke(utils.getPaint(2, 'black'));
     setColor('black');
     setStrokeWidth(2);
@@ -20,14 +27,13 @@ const Footer = () => {
   };
 
   const save = () => {
-    let paths = completedPaths;
-    if (paths.length === 0) return;
-    if (canvasInfo?.width && canvasInfo?.height) {
-      utils.makeSvgFromPaths(paths, {
-        width: canvasInfo.width,
-        height: canvasInfo.height,
-      });
-    }
+    // if (paths.value.length === 0) return;
+    // if (canvasInfo?.width && canvasInfo?.height) {
+    //   utils.makeSvgFromPaths(paths.value, {
+    //     width: canvasInfo.width,
+    //     height: canvasInfo.height,
+    //   });
+    // }
   };
 
   const undo = () => {
@@ -53,7 +59,7 @@ const Footer = () => {
         }}>
         <IconButton
           icon="undo"
-          size={20}
+          size={16}
           onPress={() => {
             /* history.history.undo.length === 0
               ? Snackbar.show({
@@ -62,11 +68,10 @@ const Footer = () => {
               :  */undo();
           }}
           color={history.history.undo.length > 0 ? '#ffffff' : '#ffffff77'}
-          style={[{marginRight: 10}]}
         />
         <IconButton
           icon="redo"
-          size={20}
+          size={16}
           onPress={() => {
            /*  history.history.redo.length === 0
               ? Snackbar.show({
