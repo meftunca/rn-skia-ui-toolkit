@@ -13,12 +13,14 @@ export const StickerSource = ({
   const image = useImage(imagePath, console.error);
 
   return (
-          <Image
+    <Group matrix={matrix}>
+            <Image
             x={dimensions.x}
             y={dimensions.y}
             width={dimensions.width}
             height={dimensions.height}
             image={image}
           />
+    </Group>
   );
 };

@@ -66,7 +66,6 @@ const CanvasText = ({
   textArray,
   fontSize,
   color,
-  dimension,
 }: CanvasTextPath & {matrix: Matrix4}) => {
    const rubikMediumFont = useFont(require('./fonts/Rubik-Medium.ttf'), 24);
   if (!rubikMediumFont) return null;
