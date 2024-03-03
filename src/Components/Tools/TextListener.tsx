@@ -1,10 +1,9 @@
-import { makeCanvasText } from '@//Drawing/CanvasItems/Text';
-import { getElevation } from '@//Drawing/utils';
-import { useCanvasCtx } from '@//Provider';
-import React,{ useCallback,useMemo } from 'react';
-import { KeyboardAvoidingView,TextInput,View,useWindowDimensions } from 'react-native';
-
-import IconButton from '@/Components/IconButton';
+import IconButton from '@/Components/IconButton'
+import { makeCanvasText } from '@/Drawing/CanvasItems/Text'
+import { getElevation } from '@/Drawing/utils'
+import { useCanvasCtx } from '@/Provider'
+import React, { useCallback, useMemo } from 'react'
+import { KeyboardAvoidingView, TextInput, useWindowDimensions, View } from 'react-native'
 
 const TextSelectionListener = () => {
   const layout = useWindowDimensions();

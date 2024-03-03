@@ -1,19 +1,14 @@
-import {SkPath,rect, Skia, Matrix4,} from '@shopify/react-native-skia';
-import { useCanvasCtx,CurrentPath } from '@//Provider';
- import Modal from '@/Components/Modal';
-import React, {useMemo} from 'react';
-import {
-  StyleSheet,
-  TouchableOpacity,
-  useWindowDimensions,
-  View,
-  Text,
-  FlatList,
-  SectionList,
-} from 'react-native';
-import IconButton from '@/Components/IconButton';
+import IconButton from '@/Components/IconButton'
+import Modal from '@/Components/Modal'
+import type { CurrentPath } from '@/Provider'
+import { useCanvasCtx } from '@/Provider'
+import type { SkPath } from '@shopify/react-native-skia'
+import { Matrix4, rect, Skia } from '@shopify/react-native-skia'
+import React from 'react'
+import { FlatList, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native'
+import { makeMutable } from 'react-native-reanimated'
 
-const RenderShapeListItem = ({
+ const RenderShapeListItem = ({
   group,
   onSelect,
 }: {
@@ -124,15 +119,15 @@ const ShapeList = () => {
                   const bounds= item.value?.computeTightBounds();
                   if(!bounds) return
                   let newShape: CurrentPath = {
-                    id: Math.random().toString(),
+                    id: Date.now().toString(32),
                     type: 'draw',
                     color:color.value,
                     // @ts-ignore
                     path: item.value?.copy(),
                     paint: stroke.value.copy(),
-                    matrix: Matrix4(),
-                    options: item.options,
-                    dimension: rect(bounds.x , bounds.y , bounds.width, bounds.height),
+                    matrix: makeMutable(Matrix4()),
+                    // options: item.options,
+                    dimensions: makeMutable(rect(bounds.x , bounds.y , bounds.width, bounds.height)),
                   };
                   addPath(newShape);
                 }}

@@ -1,22 +1,11 @@
-import {
-  Group,
-  rect,
-  SkFont,
-  SharedValueType,
-  SkMatrix,
-  SkRect,
-  Text,
-  useFont,
-  Matrix4,
-} from '@shopify/react-native-skia';
-import {
-  CanvasTextArrayItem,
-  CanvasTextPath
-} from '@/store';
-import { Dimensions } from 'react-native';
-import {COLORS} from '@/Assets/Colors';
-import {listFontFamilies} from "@shopify/react-native-skia";
- 
+import { COLORS } from '@/Assets/Colors'
+import type { CanvasTextArrayItem, CanvasTextPath } from '@/Provider'
+import type { SharedValueType, SkFont,  SkRect,TextAlign } from '@shopify/react-native-skia'
+import { Group, listFontFamilies,rect, Matrix4, Text, useFont, Paragraph, Skia } from '@shopify/react-native-skia'
+import { useMemo } from 'react'
+import { Dimensions } from 'react-native'
+import { makeMutable } from 'react-native-reanimated'
+
 console.log(listFontFamilies());
 const x = 60;
 const y = 200;
@@ -42,8 +31,8 @@ export const makeCanvasText = (
     weight: 'bold',
     color: COLORS.redRouge,
     align: 'center',
-    dimension: dimension,
-    matrix:Matrix4(),
+    dimensions: dimension,
+    matrix:makeMutable(Matrix4()),
     // dimension: ValueApi.createValue(rect(x, y, width, height)),
     // dimension: ref,
   };
@@ -56,6 +45,7 @@ const calculateTextBounds = (
 ): [CanvasTextArrayItem[], SkRect] => {
   let initialBounds = font.getMetrics().bounds;
   let initialHeight = initialBounds?.height||0;
+  if(!initialBounds) return [[], rect(0, 0, 0, 0)];
   const {width,height,x,y} = font.measureText(text);
   const windowSize = Dimensions.get('window');
   const wx = windowSize.width / 2 - width / 2;
@@ -108,13 +98,23 @@ const CanvasText = ({
   fontSize,
   color,
   dimension,
-}: CanvasTextPath & {matrix: SharedValueType<SkMatrix>}) => {
+}: CanvasTextPath & {matrix: Matrix4}) => {
    const rubikMediumFont = useFont(require('./fonts/Rubik-Medium.ttf'), 24);
   if (!rubikMediumFont) return null;
+  const paragraph = useMemo(() => {
+    const para = Skia.ParagraphBuilder.Make({
+      textAlign: TextAlign.Center,
+  })
+  for (let i = 0; i < textArray.length; i++) {
+    para.addText(textArray[i].text,);
+  }
+  return para.build();
+  }, [textArray]);
   return (
       <Group matrix={matrix}>
+        <Paragraph paragraph={paragraph} x={0} y={0} width={200}/>
           {/* <Text x={0} y={fontSize} font={font} color={color} text={text} /> */}
-          {textArray.map(({x, y, text}, index) => (
+          {/* {textArray.map(({x, y, text}, index) => (
             <Text
               key={index}
               x={x}
@@ -124,7 +124,7 @@ const CanvasText = ({
               color={color}
               text={text}
             />
-          ))}
+          ))} */}
           {/* <Text x={0} y={fontSize} font={font} text={text} color={color} /> */}
       </Group>
   );

@@ -1,7 +1,9 @@
-import styled from '@emotion/native';
-import React, { useCallback, useState } from 'react';
-import { ImageBackground, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
-import Modal, { ModalProps } from 'react-native-modal';
+import styled from '@emotion/native'
+import React, { useCallback, useState } from 'react'
+import type { StyleProp, ViewStyle } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+import type { ModalProps } from 'react-native-modal'
+import Modal from 'react-native-modal'
 
 interface MapleModalProps extends Partial<ModalProps> {
   placement?: 'top' | 'bottom';

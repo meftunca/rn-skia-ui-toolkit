@@ -1,31 +1,24 @@
-import {
-  Group,
-  Image,
-  SkMatrix,
-  useImage
-} from '@shopify/react-native-skia';
-import { StickerPath } from '@/store';
-import React from 'react';
-import { SharedValue } from 'react-native-reanimated';
+import type { StickerPath } from '@/Provider'
+import type { Matrix4 } from '@shopify/react-native-skia'
+import { Group, Image, useImage } from '@shopify/react-native-skia'
+import React, { useMemo } from 'react'
+import type { SharedValue } from 'react-native-reanimated'
+
 export const StickerSource = ({
   matrix,
   path: imagePath,
   id,
-  dimension,
-}: StickerPath & {matrix: SharedValue<SkMatrix>}) => {
+  dimensions,
+}: StickerPath & {matrix:Matrix4}) => {
   const image = useImage(imagePath, console.error);
+
   return (
-    <Group data-test-id={id} matrix={matrix}>
-        {image && (
           <Image
-            x={dimension.x}
-            y={dimension.y}
-            width={dimension.width}
-            height={dimension.height}
+            x={dimensions.x}
+            y={dimensions.y}
+            width={dimensions.width}
+            height={dimensions.height}
             image={image}
-            fit="cover"
           />
-        )}
-    </Group>
   );
 };

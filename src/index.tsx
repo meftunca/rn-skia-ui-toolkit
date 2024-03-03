@@ -1,9 +1,13 @@
-import React from "react";
-import CanvasProvider from "./Provider";
-import { Drawing } from "./Drawing";
+import React from 'react';
+import { Drawing } from './Drawing';
+import CanvasProvider from './Provider';
+import ExampleMatrix from './ExampleMatrix';
 
-export default () => (
+export default () => {
+  
+  // return <ExampleMatrix />;
+  return (
   <CanvasProvider>
     <Drawing />
   </CanvasProvider>
-);
+);}

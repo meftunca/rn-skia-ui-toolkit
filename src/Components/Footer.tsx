@@ -1,11 +1,11 @@
-import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import IconButton from '@/Components/IconButton';
-// import Snackbar from 'react-native-snackbar';
-import history from '../Drawing/history';
-import utils from '../Drawing/utils';
-import { useCanvasCtx } from '@/Provider';
+import IconButton from '@/Components/IconButton'
+import { useCanvasCtx } from '@/Provider'
+import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import history from '../Drawing/history'
+import utils from '../Drawing/utils'
 
+// import Snackbar from 'react-native-snackbar';
 const Footer = () => {
   const {setPaths, setStroke, setColor, setStrokeWidth, canvasInfo, paths} = useCanvasCtx(f=>({
     setPaths: f.setPaths,

@@ -1,12 +1,7 @@
-import {
-  Group,
-  Image,
-  Matrix4,
-  useImage
-} from '@shopify/react-native-skia';
-import React,{ useMemo } from 'react';
+import { Group, Image, Matrix4, useImage } from '@shopify/react-native-skia';
+import React, { useMemo } from 'react';
 import { useWindowDimensions } from 'react-native';
-import { SharedValue } from 'react-native-reanimated';
+import type { SharedValue } from 'react-native-reanimated';
 
 export const CanvasBackgroundImage = ({
   matrix,

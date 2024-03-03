@@ -1,10 +1,5 @@
-import {
-  PaintStyle,
-  Skia,
-  StrokeCap,
-  StrokeJoin
-} from '@shopify/react-native-skia';
-import { CurrentPath,DrawPath } from '../store';
+import { PaintStyle, Skia, StrokeCap, StrokeJoin } from '@shopify/react-native-skia';
+import type { CurrentPath, DrawPath } from '../store';
 
 //@ts-ignore adding a function to get random value from array
 Array.prototype.sample = function () {

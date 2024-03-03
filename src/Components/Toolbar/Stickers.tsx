@@ -1,16 +1,14 @@
-import {rect, Matrix4, } from '@shopify/react-native-skia';
-import { useCanvasCtx,CurrentPath } from "@//Provider";
-import React,{ useMemo } from 'react';
-import {
-  StyleSheet,
-  TouchableOpacity,
-  useWindowDimensions,
-  View,Image,FlatList
-} from 'react-native';
-import {List,ListItem } from '@/Components/List';
-import IconButton from "@/Components/IconButton"
-import iconList from './stickers.json';
-import Modal from '../Modal';
+import IconButton from '@/Components/IconButton'
+import { ListItem } from '@/Components/List'
+import type { CurrentPath } from '@/Provider'
+import { useCanvasCtx } from '@/Provider'
+import { Matrix4, rect } from '@shopify/react-native-skia'
+import React, { useMemo } from 'react'
+import { FlatList, Image, StyleSheet, TouchableOpacity, useWindowDimensions, View } from 'react-native'
+import Modal from '../Modal'
+import iconList from './stickers.json'
+import { makeMutable } from 'react-native-reanimated'
+
 type Icons = [string, string];
 type Groups = {
   name: string;
@@ -51,11 +49,11 @@ const RenderStickersItem = ({
             <TouchableOpacity
               onPress={() => {
                 onSelect({
-                  id: Date.now().toString(32) + iconName,
+                  id: Date.now().toString(32),
                   type: 'sticker',
                   path: `https://cdn-icons-png.flaticon.com/512/${link}`,
-                  dimension: rect((width-128)/2, (height-128)/3, 128, 128),
-                  matrix:Matrix4(),
+                  dimensions: makeMutable(rect((width-128)/2, (height-128)/3, 128, 128)),
+                  matrix:makeMutable(Matrix4()),
                 });
               }}
               key={index}>

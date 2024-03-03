@@ -1,25 +1,12 @@
-import {
-  Canvas,
-  Skia,
-  Path,
-  SkCanvas,
-  Matrix4,
-  SkiaDomView,
-  useDerivedValueOnJS,
-} from "@shopify/react-native-skia";
-import React, { useState, useRef, startTransition } from "react";
-import { useWindowDimensions } from "react-native";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-// import history from "./Drawing/history";
-import { View } from "react-native";
-import { useCanvasCtx, CurrentPath } from "../Provider";
-import { runOnJS, runOnUI, useSharedValue } from "react-native-reanimated";
-export const useCanvasRef = () => useRef<SkiaDomView>(null);
-interface IPath {
-  segments: String[];
-  color?: string;
-}
+import { Canvas, Matrix4, Path, Skia, SkiaDomView,useCanvasRef } from '@shopify/react-native-skia'
+import React, { useRef } from 'react'
+import { useWindowDimensions, View } from 'react-native'
+import { Gesture, GestureDetector } from 'react-native-gesture-handler'
+import { makeMutable, runOnJS, useSharedValue } from 'react-native-reanimated'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useCanvasCtx } from '../Provider'
+
+
 
 // TODO Reanimated kullanarak performans arttırılabilir
 const PaperDrawing = () => {
@@ -60,7 +47,7 @@ const PaperDrawing = () => {
         // setCurrentPath((value) => "M 0 0");
         const path = Skia.Path.MakeFromSVGString(currentPath.value);
         if (!path) return;
-        const rect = path.getBounds();
+        const rect = makeMutable(path.getBounds());
         const newPath = {
           id: Date.now().toString(32),
           type: "draw",
@@ -68,7 +55,7 @@ const PaperDrawing = () => {
           paint: stroke.value.copy(),
           color: color.value,
           dimension: rect,
-          matrix: Matrix4(),
+          matrix: makeMutable(Matrix4()),
         }
         currentPath.value = "M 0 0";
         // addPath(newPath);

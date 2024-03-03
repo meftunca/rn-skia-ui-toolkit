@@ -1,20 +1,10 @@
-import { GradientView } from '@/Components/GradientView';
-import React, {useCallback} from 'react';
-import {LayoutChangeEvent, StyleSheet, View} from 'react-native';
+import { GradientView } from '@/Components/GradientView'
+import React, { useCallback } from 'react'
+import type { LayoutChangeEvent } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+import { Gesture, GestureDetector } from 'react-native-gesture-handler'
+import Animated, { useAnimatedStyle, useDerivedValue, useSharedValue } from 'react-native-reanimated'
 
-import {
-  Gesture,
-  GestureDetector,
-  PanGestureHandler,
-  PanGestureHandlerGestureEvent,
-} from 'react-native-gesture-handler';
-import Animated, {
-  runOnJS,
-  useAnimatedGestureHandler,
-  useAnimatedStyle,
-  useDerivedValue,
-  useSharedValue,
-} from 'react-native-reanimated';
 const TRACK_R = 10;
 export type hslColor = string;
 const gradientColors = [

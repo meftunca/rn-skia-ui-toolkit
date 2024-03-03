@@ -1,23 +1,23 @@
-import * as React from "react";
-import SelectIcon from "@/Assets/icons/select";
-import RedoIcon from "@/Assets/icons/redo";
-import TextIcon from "@/Assets/icons/text";
-import DrawIcon from "@/Assets/icons/draw";
-import EraseIcon from "@/Assets/icons/erase";
-import UndoIcon from "@/Assets/icons/undo";
-import DeleteIcon from "@/Assets/icons/delete";
-import SendIcon from "@/Assets/icons/send";
-import StickerEmojiIcon from "@/Assets/icons/stickerSmile";
-import ArrowIcon from "@/Assets/icons/Arrow";
-import StarIcon from "@/Assets/icons/Star";
-import CircleIcon from "@/Assets/icons/Circle";
-import SquareIcon from "@/Assets/icons/Square";
-import LineIcon from "@/Assets/icons/Line";
-import TriangleIcon from "@/Assets/icons/Triangle";
-import DrawPenIcon from "@/Assets/icons/DrawPen";
-import ShapePlusIcon from "@/Assets/icons/ShapePlus";
-
-import { TouchableOpacity, View, ViewProps, StyleSheet, TouchableOpacityProps } from "react-native";
+import ArrowIcon from '@/Assets/icons/Arrow'
+import CircleIcon from '@/Assets/icons/Circle'
+import DeleteIcon from '@/Assets/icons/delete'
+import DrawIcon from '@/Assets/icons/draw'
+import DrawPenIcon from '@/Assets/icons/DrawPen'
+import EraseIcon from '@/Assets/icons/erase'
+import LineIcon from '@/Assets/icons/Line'
+import RedoIcon from '@/Assets/icons/redo'
+import SelectIcon from '@/Assets/icons/select'
+import SendIcon from '@/Assets/icons/send'
+import ShapePlusIcon from '@/Assets/icons/ShapePlus'
+import SquareIcon from '@/Assets/icons/Square'
+import StarIcon from '@/Assets/icons/Star'
+import StickerEmojiIcon from '@/Assets/icons/stickerSmile'
+import TextIcon from '@/Assets/icons/text'
+import TriangleIcon from '@/Assets/icons/Triangle'
+import UndoIcon from '@/Assets/icons/undo'
+import * as React from "react"
+import type { TouchableOpacityProps, ViewProps } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
 type IconButtonProps = TouchableOpacityProps & {
   color?: string;

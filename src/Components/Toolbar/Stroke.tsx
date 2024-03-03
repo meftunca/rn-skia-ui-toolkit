@@ -1,10 +1,10 @@
-import {useFloating} from '@floating-ui/react-native';
-import Color from 'color';
-import constants from '@/Drawing/constants';
-import utils from '@/Drawing/utils';
-import React, {useState} from 'react';
-import {StyleSheet, TouchableOpacity, View,FlatList} from 'react-native';
-import { useCanvasCtx } from '@/Provider';
+import constants from '@/Drawing/constants'
+import utils from '@/Drawing/utils'
+import { useCanvasCtx } from '@/Provider'
+import Color from 'color'
+import React from 'react'
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
+
 const RenderStoreItem = ({
   strokeWidth,
   onClose,

@@ -1,20 +1,14 @@
-import {
-  DataSourceParam,
-  Group,
-  ImageSVG,
-  rect,
-  SkiaValue,
-  SkMatrix,
-  useSVG,
-} from '@shopify/react-native-skia';
+import type { DataSourceParam, Matrix4 } from '@shopify/react-native-skia';
+import { Group, ImageSVG, rect,  useSVG } from '@shopify/react-native-skia';
 import React from 'react';
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
+import type { SharedValue } from 'react-native-reanimated';
 
 const {width, height} = Dimensions.get('window');
 export const PictureDimensions = rect(0, 0, width, height);
 
 interface PictureProps {
-  matrix: SkiaValue<SkMatrix>;
+  matrix: SharedValue<Matrix4>;
   source: DataSourceParam;
 }
 

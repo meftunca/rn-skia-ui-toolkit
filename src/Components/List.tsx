@@ -1,13 +1,7 @@
 import * as React from "react";
-import {
-  StyleSheet,
-  View,
-  ViewStyle,
-  Text,
-  TouchableOpacity,
-  TouchableOpacityProps,
-  ViewProps,
-} from "react-native";
+import type { TouchableOpacityProps, ViewProps } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
 
 interface ListItemProps extends TouchableOpacityProps {
   left?: () => React.ReactNode;

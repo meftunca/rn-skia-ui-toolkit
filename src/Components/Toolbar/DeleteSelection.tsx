@@ -1,6 +1,6 @@
-import React from 'react';
 import IconButton from '@/Components/IconButton';
 import { useCanvasCtx } from '@/Provider';
+import React from 'react';
 import { View } from 'react-native';
 
 const DeleteSelection = () => {
@@ -15,7 +15,7 @@ const DeleteSelection = () => {
             icon={'delete'}
             color={'red'}
             onPress={() => {
-              let newCompletedPaths = paths.value.filter(path => {
+              let newCompletedPaths = paths.filter(path => {
                 return !selectedList.includes(path.id);
               });
               setPaths(newCompletedPaths);

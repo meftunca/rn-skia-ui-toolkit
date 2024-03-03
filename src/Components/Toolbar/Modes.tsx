@@ -1,8 +1,7 @@
-import constants from "@//Drawing/constants";
-import React from "react";
-import IconButton from "@/Components/IconButton";
-import { View, FlatList } from "react-native";
-import { useCanvasCtx } from "@/Provider";
+import IconButton from '@/Components/IconButton'
+import { useCanvasCtx } from '@/Provider'
+import React from 'react'
+import { View } from 'react-native'
 
 // import Snackbar from 'react-native-snackbar';
 const RenderStoreItem = ({

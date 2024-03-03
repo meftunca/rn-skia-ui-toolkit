@@ -1,5 +1,7 @@
 import * as React from "react"
-import Svg, { SvgProps, Path, Ellipse } from "react-native-svg"
+import type { SvgProps } from 'react-native-svg'
+import Svg, { Path } from 'react-native-svg'
+
 const StickerEmojiIcon = (props: SvgProps) => (
   <Svg
   width={24}

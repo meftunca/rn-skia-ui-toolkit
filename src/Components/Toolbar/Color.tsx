@@ -1,8 +1,9 @@
-import constants from '@//Drawing/constants';
-import utils from '@//Drawing/utils';
-import React from 'react';
-import {StyleSheet, TouchableOpacity, View,FlatList} from 'react-native';
-import { useCanvasCtx } from '@/Provider';
+import constants from '@/Drawing/constants'
+import utils from '@/Drawing/utils'
+import { useCanvasCtx } from '@/Provider'
+import React from 'react'
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
+
 const RenderColorItem = ({color}: {color: string}) => {
   const [currentColor, setColor] = useCanvasCtx(state => [
     state.color,

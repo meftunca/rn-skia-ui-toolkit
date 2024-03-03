@@ -1,14 +1,9 @@
-import React from "react";
-import {
-  Canvas,
-  Rect,
-  LinearGradient,
-  Skia,
-  Shader,
-  vec
-} from "@shopify/react-native-skia";
-import { View, ViewProps } from "react-native";
-import { useLayout } from "@react-native-community/hooks";
+import { useLayout } from '@react-native-community/hooks'
+import { Canvas, LinearGradient, Rect, vec } from '@shopify/react-native-skia'
+import React from 'react'
+import type { ViewProps } from 'react-native'
+import { View } from 'react-native'
+
  
 export const GradientView:React.FC<ViewProps&{
   colors:string[],

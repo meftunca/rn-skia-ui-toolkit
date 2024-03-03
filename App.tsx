@@ -6,14 +6,14 @@ import DrawingBoard from "./src";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as React from "react";
-
+ 
 export default function App() {
   return (
-    <SafeAreaProvider style={styles.container}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <DrawingBoard />
-      </GestureHandlerRootView>
-    </SafeAreaProvider>
+      <SafeAreaProvider style={styles.container}>
+        <GestureHandlerRootView style={{ flex: 1, height: "100%" }}>
+          <DrawingBoard />
+        </GestureHandlerRootView>
+      </SafeAreaProvider>
   );
 }
 

@@ -7,3 +7,10 @@ Projenin amacı bakımı yapılmayan ve react-native geliştiricilerinin ihtiyac
 - [ ] Signature Pad
 - [*] Gradient View
 - [ ]Curved Bottom tabbar
+
+
+## TOOLS
+`import {types...}` to `import type {types...}`
+ ```bash 
+    ts-import-types-cli --project ./tsconfig.json 'src/**/*.ts' 'src/**/*.tsx'
+  ```

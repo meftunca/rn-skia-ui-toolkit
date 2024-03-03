@@ -1,8 +1,8 @@
-import { COLORS } from "@/Assets/Colors";
-import { useCanvasCtx } from "@/Provider";
-import React, { useMemo } from "react";
-import ColorSlider from "./ColorSlider";
-import TextSelectionListener from "./TextListener";
+import { COLORS } from '@/Assets/Colors'
+import { useCanvasCtx } from '@/Provider'
+import React, { useMemo } from 'react'
+import ColorSlider from './ColorSlider'
+import TextSelectionListener from './TextListener'
 
 const CanvasRuntimeTools = () => {
   const { selectedList, paths} = useCanvasCtx((f) => ({
@@ -14,7 +14,7 @@ const CanvasRuntimeTools = () => {
     if (selectedList.length === 0) return COLORS.redRouge;
     let id = selectedList[0];
     return (
-      Object.values(paths.value).find((path) => path.id === id)?.color ||
+      Object.values(paths).find((path) => path.id === id)?.color ||
       COLORS.redRouge
     );
   }, [selectedList, paths]);

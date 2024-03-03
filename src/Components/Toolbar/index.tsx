@@ -1,16 +1,15 @@
-import utils from "@//Drawing/utils";
-import IconButton from "@/Components/IconButton";
-import { shift, useFloating } from "@floating-ui/react-native";
-import React, { useState } from "react";
-import { Pressable, StyleSheet, View, useWindowDimensions } from "react-native";
-
-import { useCanvasCtx } from "@/Provider";
-import AppendText from "./AppendText";
-import DeleteSelection from "./DeleteSelection";
-import ModeList from "./Modes";
-import ShapeList from "./Shapes";
-import Stickers from "./Stickers";
-import StrokeList from "./Stroke";
+import IconButton from '@/Components/IconButton'
+import utils from '@/Drawing/utils'
+import { useCanvasCtx } from '@/Provider'
+import { shift, useFloating } from '@floating-ui/react-native'
+import React, { useState } from 'react'
+import { StyleSheet, useWindowDimensions, View } from 'react-native'
+import AppendText from './AppendText'
+import DeleteSelection from './DeleteSelection'
+import ModeList from './Modes'
+import ShapeList from './Shapes'
+import Stickers from './Stickers'
+import StrokeList from './Stroke'
 
 const Toolbar = () => {
   const { currentColor, currentStrokeWidth, mode } = useCanvasCtx((f) => ({
@@ -27,7 +26,6 @@ const Toolbar = () => {
     "stroke"
   );
   const [visible, setVisible] = useState(false);
-  console.log("currentMode", mode);
   return (
     <View
       style={{

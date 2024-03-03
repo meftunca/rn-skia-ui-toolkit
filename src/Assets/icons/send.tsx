@@ -1,5 +1,7 @@
 import * as React from "react"
-import Svg, { SvgProps, Path,Use } from "react-native-svg"
+import type { SvgProps } from 'react-native-svg'
+import Svg, { Path } from 'react-native-svg'
+
 const SendIcon = (props: SvgProps) => (
   <Svg
     width={24}
