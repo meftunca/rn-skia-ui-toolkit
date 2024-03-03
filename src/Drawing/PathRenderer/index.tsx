@@ -11,7 +11,7 @@ import {
   useCanvasRef,
 } from "@shopify/react-native-skia";
 import React, { useMemo } from "react";
-import { useDerivedValue, useSharedValue } from "react-native-reanimated";
+import { useDerivedValue, useSharedValue, withSpring } from "react-native-reanimated";
 import { CurrentPath, useCanvasCtx } from "@/Provider";
 import { CanvasBackgroundImage } from "../CanvasItems/Picture";
 import { StickerSource } from "../CanvasItems/Sticker";
@@ -28,6 +28,7 @@ const PathRenderer = () => {
   return (
     <Canvas
       ref={canvasRef}
+      mode="continuous"
       style={{
         // height: layoutHeight,
         // width: width - 24,
@@ -44,8 +45,8 @@ const PathRenderer = () => {
           path={imageURL}
         />
 
-       {paths.map((path) => (
-          <GroupPath key={path.id} {...path} />
+       {paths.map((path,index) => (
+          <GroupPath key={index} {...path} />
         ))}
       </ContextBridge>
     </Canvas>
@@ -69,8 +70,13 @@ const GroupPath = ({ id, type, matrix, ...path }: CurrentPath) => {
       return <StickerSource {...path} />;
     }
   }, [type, path]);
-  console.log("matrix", matrix.value);
-  return <Group matrix={matrix}>{item}</Group>;
+
+  const m3 = useDerivedValue(() => {
+    console.log(toMatrix3(matrix.value))
+    return withSpring(toMatrix3(matrix.value));
+  }, [matrix]);
+
+  return <Group matrix={m3}>{item}</Group>;
 };
 
 export default PathRenderer;
