@@ -1,6 +1,6 @@
 import { COLORS } from '@/Assets/Colors'
 import type { CanvasTextArrayItem, CanvasTextPath } from '@/Provider'
-import type { SharedValueType, SkFont,  SkRect,TextAlign } from '@shopify/react-native-skia'
+import type { SharedValueType, SkFont,  SkRect, } from '@shopify/react-native-skia'
 import { Group, listFontFamilies,rect, Matrix4, Text, useFont, Paragraph, Skia } from '@shopify/react-native-skia'
 import { useMemo } from 'react'
 import { Dimensions } from 'react-native'
@@ -50,38 +50,7 @@ const calculateTextBounds = (
   const windowSize = Dimensions.get('window');
   const wx = windowSize.width / 2 - width / 2;
   const wy = windowSize.height / 3 - height / 2;
-  // let charWidth = width / text.length + 1;
-  // let lineWidth = Math.floor(maxWidth / charWidth);
-  // let contentWidth = width * 24;
-  // let splitedText = text.split(/(\s+)/);
-  // let splitedTextLength = splitedText.length;
-  // let arrayItems: CanvasTextArrayItem[] = [];
-  // let currentItem = '';
-  // let totalHeight = 0;
-  // let totalWidth = 0;
-  // splitedText.forEach((item, index) => {
-  //   let itemM = font.measureText(currentItem)
-  //   if (itemM.width + contentWidth > maxWidth || splitedTextLength >1) {
-  //     arrayItems.push({
-  //       text: currentItem,
-  //       ...itemM
-  //       // width: currentItemWidth,
-  //       // height: initialHeight,
-  //       // x:
-  //       //   align === 'right'
-  //       //     ? maxWidth - currentItemWidth
-  //       //     : (align === 'center' ? (maxWidth - currentItemWidth) / 2 : 0) + 8,
-  //       // y: 24 * arrayItems.length,
-  //     });
-  //     currentItem = '';
-  //     contentWidth = 0;
-  //   }
-  //   if(splitedTextLength ===index+1) return
-  //   currentItem += item;
-  //   totalWidth += itemM.width;
-  //   totalHeight += itemM.height;
-  // });
-  // console.log(arrayItems)
+ 
   return [[{
     text: text,
     width: width,
@@ -103,7 +72,7 @@ const CanvasText = ({
   if (!rubikMediumFont) return null;
   const paragraph = useMemo(() => {
     const para = Skia.ParagraphBuilder.Make({
-      textAlign: TextAlign.Center,
+      textAlign: 2, // 2 = TextAlign.Center
   })
   for (let i = 0; i < textArray.length; i++) {
     para.addText(textArray[i].text,);
