@@ -1,4 +1,4 @@
-import type { CurrentPath } from '@/Provider';
+import type { CurrentPath } from '@app/Provider/ProviderTypes';
 
 const history: {
   undo: CurrentPath[];

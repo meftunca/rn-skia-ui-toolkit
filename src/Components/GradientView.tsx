@@ -4,13 +4,13 @@ import React from 'react'
 import type { ViewProps } from 'react-native'
 import { View } from 'react-native'
 
- 
+
 export const GradientView:React.FC<ViewProps&{
   colors:string[],
-}> = ({children,colors,...props}) => {
+}> = ({children,style={},colors,...props}) => {
   const {x,y,width,height,onLayout} = useLayout();
-  return (
-    <View {...props} style={[{ flex: 1,overflow:"hidden" },props.style].flat()} onLayout={(e)=>{
+  return (//@ts-ignore
+    <View {...props} style={[{ flex: 1,overflow:"hidden" },style].flat()} onLayout={(e)=>{
       onLayout(e);
       if(!!props.onLayout) props.onLayout(e);
     }}>

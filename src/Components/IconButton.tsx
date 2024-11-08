@@ -1,20 +1,20 @@
-import ArrowIcon from '@/Assets/icons/Arrow'
-import CircleIcon from '@/Assets/icons/Circle'
-import DeleteIcon from '@/Assets/icons/delete'
-import DrawIcon from '@/Assets/icons/draw'
-import DrawPenIcon from '@/Assets/icons/DrawPen'
-import EraseIcon from '@/Assets/icons/erase'
-import LineIcon from '@/Assets/icons/Line'
-import RedoIcon from '@/Assets/icons/redo'
-import SelectIcon from '@/Assets/icons/select'
-import SendIcon from '@/Assets/icons/send'
-import ShapePlusIcon from '@/Assets/icons/ShapePlus'
-import SquareIcon from '@/Assets/icons/Square'
-import StarIcon from '@/Assets/icons/Star'
-import StickerEmojiIcon from '@/Assets/icons/stickerSmile'
-import TextIcon from '@/Assets/icons/text'
-import TriangleIcon from '@/Assets/icons/Triangle'
-import UndoIcon from '@/Assets/icons/undo'
+import ArrowIcon from '@app/Assets/icons/Arrow'
+import CircleIcon from '@app/Assets/icons/Circle'
+import DeleteIcon from '@app/Assets/icons/delete'
+import DrawIcon from '@app/Assets/icons/draw'
+import DrawPenIcon from '@app/Assets/icons/DrawPen'
+import EraseIcon from '@app/Assets/icons/erase'
+import LineIcon from '@app/Assets/icons/Line'
+import RedoIcon from '@app/Assets/icons/redo'
+import SelectIcon from '@app/Assets/icons/select'
+import SendIcon from '@app/Assets/icons/send'
+import ShapePlusIcon from '@app/Assets/icons/ShapePlus'
+import SquareIcon from '@app/Assets/icons/Square'
+import StarIcon from '@app/Assets/icons/Star'
+import StickerEmojiIcon from '@app/Assets/icons/stickerSmile'
+import TextIcon from '@app/Assets/icons/text'
+import TriangleIcon from '@app/Assets/icons/Triangle'
+import UndoIcon from '@app/Assets/icons/undo'
 import * as React from "react"
 import type { TouchableOpacityProps, ViewProps } from 'react-native'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
@@ -35,10 +35,13 @@ type IconButtonProps = TouchableOpacityProps & {
     | "square"
     | "send"
     | "triangle"
+    | "shape-plus"
+    | "reload"
     | "line"
     | "draw-pen"
     |"sticker-emoji"
-    | "format-text-bold";
+    | "format-text"
+    | "format-text-bold"
   size?: number;
   style?: ViewProps["style"];
 };
@@ -52,6 +55,7 @@ const iconsPath = {
   undo:UndoIcon,
   redo:RedoIcon,
   reload:RedoIcon,
+  "format-text":TextIcon,
   "format-text-bold":TextIcon,
   send:SendIcon,
   "sticker-emoji":StickerEmojiIcon,

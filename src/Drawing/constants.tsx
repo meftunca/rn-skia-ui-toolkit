@@ -1,4 +1,4 @@
-import { COLORS } from '@/Assets/Colors';
+import { COLORS } from '@app/Assets/Colors';
 
 const colors = Object.values(COLORS);
 const strokes = Array(8)

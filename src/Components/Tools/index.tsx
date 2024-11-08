@@ -1,27 +1,22 @@
-import { COLORS } from '@/Assets/Colors'
-import { useCanvasCtx } from '@/Provider'
+import { COLORS } from '@app/Assets/Colors'
+import { useCanvasCtx } from '@app/Provider'
 import React, { useMemo } from 'react'
 import ColorSlider from './ColorSlider'
 import TextSelectionListener from './TextListener'
 
 const CanvasRuntimeTools = () => {
-  const { selectedList, paths} = useCanvasCtx((f) => ({
-    selectedList: f.selectedList,
-    paths: f.paths,
-  }));
+  const [currentSelected, paths] = useCanvasCtx((f) => [f.currentSelected,f.paths]);
 
   const selectedColor = useMemo(() => {
-    if (selectedList.length === 0) return COLORS.redRouge;
-    let id = selectedList[0];
+    if (currentSelected ==="") return COLORS.redRouge;
+    const path = (paths||[]).find((path) => path.id === currentSelected)
     return (
-      Object.values(paths).find((path) => path.id === id)?.color ||
-      COLORS.redRouge
+      !path||path.type === "sticker" ? COLORS.redRouge:path?.color||COLORS.redRouge
     );
-  }, [selectedList, paths]);
+  }, [currentSelected, paths]);
 
   const changeColor = (color: string) => {
-    "worklet";
-    console.log("color", color);
+     ;
     // let index = paths.value.findIndex(path =>
     //   selectedList.includes(path.id),
     // );
@@ -31,11 +26,11 @@ const CanvasRuntimeTools = () => {
     // paths.value[index].color = color;
   };
 
-  const iselectedText = paths.some(
-    (a) => a.type === "text" && selectedList.includes(a.id)
+  const iselectedText = (paths||[]).some(
+    (a) => a.type === "text" && currentSelected === a.id,
   );
 
-  if (selectedList.length === 0) return null;
+  if (currentSelected==="") return null;
   return (
     <>
       {iselectedText && <TextSelectionListener />}

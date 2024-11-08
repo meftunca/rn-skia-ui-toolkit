@@ -1,5 +1,5 @@
-import IconButton from '@/Components/IconButton'
-import { useCanvasCtx } from '@/Provider'
+import IconButton from '@app/Components/IconButton'
+import { useCanvasCtx } from '@app/Provider'
 import React from 'react'
 import { View } from 'react-native'
 

@@ -1,4 +1,4 @@
-import { GradientView } from '@/Components/GradientView'
+import { GradientView } from '@app/Components/GradientView'
 import React, { useCallback } from 'react'
 import type { LayoutChangeEvent } from 'react-native'
 import { StyleSheet, View } from 'react-native'
@@ -59,11 +59,13 @@ const ColorSlider = ({
   const sliderHeight = useSharedValue(0);
 
   const position = useDerivedValue(() => {
+    // hsl regex
     const hslRegExp = new RegExp(/hsl\(([\d.]+),\s*(\d+)%,\s*([\d.]+)%\)/);
+    // result
     const res = hslRegExp.exec(color.value);
-
+    // luminance
     const lum = res ? parseFloat(res[3]) : 0;
-
+    // tint
     const tint = res ? parseFloat(res[1]) : 0;
 
     if (lum > 50) {
@@ -86,7 +88,7 @@ const ColorSlider = ({
   const startY = useSharedValue(0);
   const newGestureEvent =  Gesture.Pan()
   .runOnJS(true).onBegin(e=>{
-    "worklet";
+     ;
     startY.value = e.y;
   }).onChange((e) => {
     'worklet';

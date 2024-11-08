@@ -1,6 +1,5 @@
 import "react-native-gesture-handler";
 
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import DrawingBoard from "./src";
 import { SafeAreaProvider } from "react-native-safe-area-context";

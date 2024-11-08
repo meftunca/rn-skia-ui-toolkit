@@ -1,7 +1,5 @@
-import IconButton from '@/Components/IconButton'
-import utils from '@/Drawing/utils'
-import { useCanvasCtx } from '@/Provider'
-import { shift, useFloating } from '@floating-ui/react-native'
+import IconButton from '@app/Components/IconButton'
+import { useCanvasCtx } from '@app/Provider'
 import React, { useState } from 'react'
 import { StyleSheet, useWindowDimensions, View } from 'react-native'
 import AppendText from './AppendText'
@@ -12,37 +10,24 @@ import Stickers from './Stickers'
 import StrokeList from './Stroke'
 
 const Toolbar = () => {
-  const { currentColor, currentStrokeWidth, mode } = useCanvasCtx((f) => ({
+  const { mode } = useCanvasCtx((f) => ({
     currentColor: f.color,
     currentStrokeWidth: f.strokeWidth,
     mode: f.mode,
   }));
-  const { width } = useWindowDimensions();
-  const { refs, floatingStyles } = useFloating({
-    placement: "left",
-    middleware: [shift()],
-  });
+
   const [previewType, setPreviewType] = useState<"stroke" | "color" | "mode">(
     "stroke"
   );
   const [visible, setVisible] = useState(false);
   return (
-    <View
-      style={{
-        position: "relative",
-        width: width,
-        zIndex: 99,
-        // flexDirection: 'row',
-        // justifyContent: 'flex-start',
-
-        // overflow: 'visible',
-      }}
-    >
+    <>
       {visible && (
         <View
           style={{
             position: "absolute",
             left:0,top:-40,
+            right: 0,
             borderRadius: 12,
             width: "100%",
             backgroundColor: "#333333",
@@ -59,7 +44,7 @@ const Toolbar = () => {
         </View>
       )}
       <View
-        style={[styles.toolbar, { width: "100%", justifyContent: "center" }]}
+        style={[styles.toolbar]}
       >
         <IconButton
           icon={mode}
@@ -69,14 +54,14 @@ const Toolbar = () => {
             setVisible((f) => !f);
           }}
         />
-        <IconButton
+       {mode === "draw" && <IconButton
           icon="draw-pen"
           color="#ffffff"
           onPress={() => {
             setPreviewType("stroke");
             setVisible((f) => !f);
           }}
-        />
+        />}
         {/* <IconButton
           icon="palette"
           color="#ffffff"
@@ -88,10 +73,9 @@ const Toolbar = () => {
         <ShapeList />
         <Stickers />
         <AppendText />
-        {/* <View style={{flexGrow: 1}} /> */}
         <DeleteSelection />
       </View>
-    </View>
+    </>
   );
 };
 
@@ -99,7 +83,6 @@ export default Toolbar;
 
 const styles = StyleSheet.create({
   toolbar: {
-    paddingHorizontal: 16,
     flexDirection: "row",
   },
   color: {
@@ -109,7 +92,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderWidth: 2,
     borderColor: "#000000",
-    ...utils.getElevation(1),
+    // ...utils.getElevation(1),
     justifyContent: "center",
     alignItems: "center",
   },

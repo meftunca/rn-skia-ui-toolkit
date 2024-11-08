@@ -39,7 +39,8 @@ const MapleModal: React.FC<MapleModalProps> = ({
   const [enableSwipe, setEnableSwipe] = useState<boolean>(false);
   const SwipeDetector = useCallback(
     () => (
-      <SwipeTarget
+      <View
+        style={styles.SwipeTarget}
         onTouchStart={enableSwipe === false ? () => setEnableSwipe(true) : undefined}
         onTouchEnd={enableSwipe === true ? () => setEnableSwipe(false) : undefined}
       />
@@ -67,39 +68,34 @@ const MapleModal: React.FC<MapleModalProps> = ({
         style,
       ]}>
 
-        <ModalContainer placement={placement} style={containerStyle}>
+        <View style={[styles.container,containerStyle]}>
           {placement === 'bottom' && <SwipeDetector />}
           {children}
           {placement === 'top' && <SwipeDetector />}
-        </ModalContainer>
+        </View>
     </Modal>
   );
 };
 
-const ModalContainer = styled(View)<{ placement?: 'top' | 'bottom' }>`
-  /* margin: 16px; */
-  box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.3);
-  /* padding: 16px; */
-  border-radius: 32px 32px 0 0;
-  /* border-top-left-radius: ${({ placement }) => (placement === 'bottom' ? 30 : 0)}px;
-  border-top-right-radius: ${({ placement }) => (placement === 'bottom' ? 30 : 0)}px;
-  border-bottom-left-radius: ${({ placement }) => (placement === 'top' ? 30 : 0)}px;
-  border-bottom-right-radius: ${({ placement }) => (placement === 'top' ? 30 : 0)}px; */
-`;
-
-const SwipeTarget = styled.View`
-  width: 18%;
-  margin-left: 41%;
-  height: 8px;
-  border-radius: 8px;
-  background-color: rgba(0, 0, 0, 0.45);
-  margin-bottom: 12px;
-  margin-top: 10px;
-`;
 
 export default MapleModal;
 
 const styles = StyleSheet.create({
+  container:{
+    paddingHorizontal: 16,
+    paddingVertical: 24,
+    margin:8,
+    borderRadius:16
+  },
+  SwipeTarget: {
+    width: "20%",
+    marginLeft: "40%",
+    height: 8,
+    borderRadius: 8,
+    backgroundColor: 'rgba(0, 0, 0, 0.45)',
+    marginBottom: 12,
+    marginTop: 10,
+  },
   modalTitle: {
     flexGrow: 1,
     fontSize: 18,

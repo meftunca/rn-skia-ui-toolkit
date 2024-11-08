@@ -1,29 +1,27 @@
-import IconButton from '@/Components/IconButton';
-import { useCanvasCtx } from '@/Provider';
+import IconButton from '@app/Components/IconButton';
+import { useCanvasCtx } from '@app/Provider';
 import React from 'react';
 import { View } from 'react-native';
 
 const DeleteSelection = () => {
-  const [selectedList, paths, setPaths,clearSelected] = useCanvasCtx(
-    state => [state.selectedList, state.paths, state.setPaths, state.clearSelected],
+  const [currentSelected, paths, setPaths,clearSelected] = useCanvasCtx(
+    s => [s.currentSelected, s.paths, s.setPaths,s.clearSelected],
   );
+  if(currentSelected === "") return null;
   return (
-    <View
-     >
-        {selectedList.length > 0 && (
-          <IconButton
+ 
+           <IconButton
             icon={'delete'}
             color={'red'}
             onPress={() => {
-              let newCompletedPaths = paths.filter(path => {
-                return !selectedList.includes(path.id);
+              let newCompletedPaths = (paths||[]).filter(path => {
+                return currentSelected !== path.id
               });
               setPaths(newCompletedPaths);
-              clearSelected();
+              clearSelected()
             }}
           />
-        )}
-    </View>
+ 
   );
 };
 

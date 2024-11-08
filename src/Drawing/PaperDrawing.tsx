@@ -8,7 +8,6 @@ import { useCanvasCtx } from '../Provider'
 
 
 
-// TODO Reanimated kullanarak performans arttırılabilir
 const PaperDrawing = () => {
   let canvas = useCanvasRef();
   // const [currentPath, setCurrentPath] = useState("M 0 0");
@@ -26,7 +25,7 @@ const PaperDrawing = () => {
   ]);
 
   const pan = Gesture.Pan()
-    // .runOnJS(true)
+    .runOnJS(true)
     .onBegin((g) => {
       //  const newPaths = [...paths];
 
@@ -43,28 +42,29 @@ const PaperDrawing = () => {
       // setCurrentPath((value) => value + ` L ${g.x} ${g.y}`);
       currentPath.value = currentPath.value + ` L ${g.x} ${g.y}`;
     })
-    .onFinalize(() => {
+    .onEnd(() => {
         // setCurrentPath((value) => "M 0 0");
         const path = Skia.Path.MakeFromSVGString(currentPath.value);
-        if (!path) return;
         const rect = makeMutable(path.getBounds());
+        console.log(rect)
         const newPath = {
           id: Date.now().toString(32),
           type: "draw",
           path,
-          paint: stroke.value.copy(),
-          color: color.value,
-          dimension: rect,
+          paint: makeMutable(stroke.value.copy()),
+          color: makeMutable(color.value),
+          dimensions: rect,
           matrix: makeMutable(Matrix4()),
         }
         currentPath.value = "M 0 0";
         // addPath(newPath);
         // paths.modify((f:Record<string,CurrentPath>) => {
-        //   "worklet"
+        //    
         //   f[newPath.id] = newPath;
         //   return f;
         // },true)
-        runOnJS(addPath)(newPath);
+        // @ts-ignore
+        addPath(newPath);
     })
     .minDistance(1);
 

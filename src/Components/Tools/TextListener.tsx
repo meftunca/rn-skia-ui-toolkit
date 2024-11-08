@@ -1,7 +1,7 @@
-import IconButton from '@/Components/IconButton'
-import { makeCanvasText } from '@/Drawing/CanvasItems/Text'
-import { getElevation } from '@/Drawing/utils'
-import { useCanvasCtx } from '@/Provider'
+import IconButton from '@app/Components/IconButton'
+import { makeCanvasText } from '@app/Drawing/CanvasItems/Text'
+import { getElevation } from '@app/Drawing/utils'
+import { useCanvasCtx } from '@app/Provider'
 import React, { useCallback, useMemo } from 'react'
 import { KeyboardAvoidingView, TextInput, useWindowDimensions, View } from 'react-native'
 
@@ -16,7 +16,7 @@ const TextSelectionListener = () => {
 
   const selectedText = useMemo(
     () =>
-      paths.value.find(
+      paths?.value?.find(
         a => a.type === 'text' && selectedList.includes(a.id),
       ),
     [paths, selectedList],
@@ -25,6 +25,7 @@ const TextSelectionListener = () => {
     f.font['rubik']['bold'],
     f.dimensions,
   ]);
+  console.log("layout", layout)
 
   const replaceContent = useCallback(
     (content: string) => {
@@ -36,6 +37,7 @@ const TextSelectionListener = () => {
     },
     [selectedList, selectedText],
   );
+  console.log("TextSelectionListener -> selectedText", selectedText)
   // show from bottom-up
   // hide from top-down
   if (!!selectedText) {

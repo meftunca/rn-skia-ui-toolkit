@@ -1,6 +1,6 @@
-import constants from '@/Drawing/constants'
-import utils from '@/Drawing/utils'
-import { useCanvasCtx } from '@/Provider'
+import constants from '@app/Drawing/constants'
+import utils from '@app/Drawing/utils'
+import { useCanvasCtx } from '@app/Provider'
 import Color from 'color'
 import React from 'react'
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
@@ -12,17 +12,16 @@ const RenderStoreItem = ({
   strokeWidth: number;
   onClose: () => void;
 }) => {
-  const [currentStrokeWidth, color, setStrokeWidth] = useCanvasCtx(state => [
+  const [currentStrokeWidth, color, ] = useCanvasCtx(state => [
     state.strokeWidth,
     state.color,
-    state.setStrokeWidth,
   ]);
 
   return (
     <TouchableOpacity
       activeOpacity={0.6}
       onPress={() => {
-        setStrokeWidth(strokeWidth);
+        // setStrokeWidth(strokeWidth);
         onClose();
       }}
       style={[
@@ -86,7 +85,6 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderWidth: 2,
     borderColor: '#f0f0f0',
-    ...utils.getElevation(1),
     justifyContent: 'center',
     alignItems: 'center',
   },

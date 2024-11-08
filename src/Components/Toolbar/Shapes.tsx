@@ -1,24 +1,38 @@
-import IconButton from '@/Components/IconButton'
-import Modal from '@/Components/Modal'
-import type { CurrentPath } from '@/Provider'
-import { useCanvasCtx } from '@/Provider'
-import type { SkPath } from '@shopify/react-native-skia'
-import { Matrix4, rect, Skia } from '@shopify/react-native-skia'
-import React from 'react'
-import { FlatList, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native'
-import { makeMutable } from 'react-native-reanimated'
+import IconButton from '@app/Components/IconButton';
+import Modal from '@app/Components/Modal';
+import type {CurrentPath} from '@app/Provider/ProviderTypes';
+import {useCanvasCtx} from '@app/Provider';
+import type {SkPath} from '@shopify/react-native-skia';
+import {
+  Matrix4,
+  rect,
+  Skia,
+  multiply4,
+  translate,
+} from '@shopify/react-native-skia';
+import React from 'react';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from 'react-native';
+import {makeMutable} from 'react-native-reanimated';
+import { COLORS } from '@app/Assets/Colors';
 
- const RenderShapeListItem = ({
+const RenderShapeListItem = ({
   group,
   onSelect,
 }: {
   group: ShapeItemList;
-  // selectedList: CurrentPath[];
   onSelect: (item: SkPath) => void;
 }) => {
   return (
     <>
-      <TouchableOpacity onPress={() => group.value?onSelect(group.value):undefined}>
+      <TouchableOpacity
+        onPress={() => (group.value ? onSelect(group.value) : undefined)}>
         <View
           style={{
             flexDirection: 'row',
@@ -26,7 +40,12 @@ import { makeMutable } from 'react-native-reanimated'
             paddingVertical: 12,
             paddingHorizontal: 16,
           }}>
-          <IconButton icon={group.type} color="#ffffff" style={{marginRight: 32}} />
+          <IconButton
+          // @ts-ignore
+            icon={group.type}
+            color="#ffffff"
+            style={{marginRight: 32}}
+          />
           <Text style={{color: '#ffffff'}}>{group.type.toUpperCase()}</Text>
         </View>
       </TouchableOpacity>
@@ -38,7 +57,7 @@ import { makeMutable } from 'react-native-reanimated'
 type ShapeItemList = {
   type: string;
   icon: string;
-  value:SkPath|null,
+  value: SkPath | null;
   options: string[];
 };
 
@@ -54,13 +73,17 @@ const shapeList: ShapeItemList[] = [
   {
     type: 'circle',
     icon: 'checkbox-multiple-blank-circle',
-    value: Skia.Path.MakeFromSVGString("M 100 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0"),
+    value: Skia.Path.MakeFromSVGString(
+      'M 100 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0',
+    ),
     options: ['stroke', 'color'],
   },
   {
     type: 'square',
     icon: 'square-rounded',
-    value: Skia.Path.MakeFromSVGString('M 100 100 L 200 100 L 200 200 L 100 200 Z'),
+    value: Skia.Path.MakeFromSVGString(
+      'M 100 100 L 200 100 L 200 200 L 100 200 Z',
+    ),
     options: ['stroke', 'color', 'radius'],
   },
   {
@@ -84,13 +107,14 @@ const shapeList: ShapeItemList[] = [
 
 const ShapeList = () => {
   const [visible, setVisible] = React.useState<null | boolean>(null);
-  const window = useWindowDimensions();
-  const [addPath,color, stroke] = useCanvasCtx(f=>[f.addPath
-    ,f.currentColor,
-     f.stroke,]);
+  const [addPath, color, stroke] = useCanvasCtx(f => [
+    f.addPath,
+    f.currentColor,
+    f.stroke,
+  ]);
   const ctx = useCanvasCtx(f => f);
-  const centerY = window.height / 2;
-  const centerX = window.width / 2;
+
+  const {width, height} = useWindowDimensions();
 
   return (
     <>
@@ -110,24 +134,30 @@ const ShapeList = () => {
           title="ShapeList">
           <FlatList
             data={shapeList}
-      
             renderItem={({item, index}) => (
               <RenderShapeListItem
                 group={item}
                 key={index}
                 onSelect={() => {
-                  const bounds= item.value?.computeTightBounds();
-                  if(!bounds) return
+                  const bounds = item.value?.computeTightBounds();
+                  if (!bounds) return;
+                  const matrx = makeMutable(Matrix4());
+                  matrx.value = multiply4(
+                    translate((width - bounds.width) / 2, (height - bounds.height) /2),
+                    matrx.value,
+                  );
                   let newShape: CurrentPath = {
                     id: Date.now().toString(32),
                     type: 'draw',
-                    color:color.value,
+                    color: color?.value||COLORS.redRouge,
                     // @ts-ignore
                     path: item.value?.copy(),
                     paint: stroke.value.copy(),
-                    matrix: makeMutable(Matrix4()),
+                    matrix: matrx,
                     // options: item.options,
-                    dimensions: makeMutable(rect(bounds.x , bounds.y , bounds.width, bounds.height)),
+                    dimensions: makeMutable(
+                      rect(0,0, bounds.width, bounds.height),
+                    ),
                   };
                   addPath(newShape);
                 }}
